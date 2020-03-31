@@ -1,0 +1,233 @@
+
+<html>
+<head>
+<title>YCSB Testing Results</title>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script> 
+</head>
+<style>
+.chart {
+	width: 47%; 
+	height: 400px; 
+	margin: 5px 0 10px 10px;
+	float: left;
+}
+h1 {
+	text-align: center;
+}
+p,h2 {
+	display: table;
+	width: 100%;
+	margin: 3px;
+}
+</style>
+<body>
+<h1>YCSB Testing Results</h1>
+ <h2>WorkloadA</h2>
+<div id="WorkloadA-INSERT" class=chart></div>
+<script>
+$(document).ready(function() {  
+   var chart = {
+      type: 'spline'      
+   }; 
+   var title = {
+      text: 'WorkloadA INSERT'
+   };
+   var subtitle = {
+      text: 'Update heavy, Read/Update ratio: 50/50'
+   };
+
+   var yAxis = {
+      title: {
+         text: 'Latency (Milliseconds)'
+      },
+      labels: {
+         formatter: function () {
+            return this.value;
+         }
+      },
+      lineWidth: 2
+   };
+   var tooltip = {
+      crosshairs: true,
+      shared: true
+   };
+   var plotOptions = {
+      spline: {
+         marker: {
+            radius: 4,
+            lineColor: '#666666',
+            lineWidth: 1
+         }
+      }
+   };
+   var xAxis = {
+      title: {
+         text: 'Throughput'
+      },
+      categories: ['100','1000']
+   };
+   var series= [ {
+         name: 'CockroachDB',
+         marker: {
+            symbol: 'circle'
+         },
+         data: [1.270,1.270],
+         
+      },
+   ];
+   var json = {};
+   json.chart = chart;
+   json.title = title;
+   json.subtitle = subtitle;
+   json.tooltip = tooltip;
+   json.xAxis = xAxis;
+   json.yAxis = yAxis;  
+   json.series = series;
+   json.plotOptions = plotOptions;
+   $('#WorkloadA-INSERT').highcharts(json);
+  
+});
+</script>
+ 
+<div id="WorkloadA-OVERALL-RunTime" class=chart></div>
+<script>
+$(document).ready(function() {  
+   var chart = {
+      type: 'spline'      
+   }; 
+   var title = {
+      text: 'WorkloadA OVERALL-RunTime'
+   };
+   var subtitle = {
+      text: 'Update heavy, Read/Update ratio: 50/50'
+   };
+
+   var yAxis = {
+      title: {
+         text: 'RunTime (Seconds)'
+      },
+      labels: {
+         formatter: function () {
+            return this.value;
+         }
+      },
+      lineWidth: 2
+   };
+   var tooltip = {
+      crosshairs: true,
+      shared: true
+   };
+   var plotOptions = {
+      spline: {
+         marker: {
+            radius: 4,
+            lineColor: '#666666',
+            lineWidth: 1
+         }
+      }
+   };
+   var xAxis = {
+      title: {
+         text: 'Throughput'
+      },
+      categories: ['100','1000']
+   };
+   var series= [ {
+         name: 'CockroachDB',
+         marker: {
+            symbol: 'circle'
+         },
+         data: [13.011,13.011],
+         
+      },
+   ];
+   var json = {};
+   json.chart = chart;
+   json.title = title;
+   json.subtitle = subtitle;
+   json.tooltip = tooltip;
+   json.xAxis = xAxis;
+   json.yAxis = yAxis;  
+   json.series = series;
+   json.plotOptions = plotOptions;
+   $('#WorkloadA-OVERALL-RunTime').highcharts(json);
+  
+});
+</script>
+ 
+<div id="WorkloadA-OVERALL-Throughput" class=chart></div>
+<script>
+$(document).ready(function() {  
+   var chart = {
+      type: 'spline'      
+   }; 
+   var title = {
+      text: 'WorkloadA OVERALL-Throughput'
+   };
+   var subtitle = {
+      text: 'Update heavy, Read/Update ratio: 50/50'
+   };
+
+   var yAxis = {
+      title: {
+         text: 'Throughput (ops/sec)'
+      },
+      labels: {
+         formatter: function () {
+            return this.value;
+         }
+      },
+      lineWidth: 2
+   };
+   var tooltip = {
+      crosshairs: true,
+      shared: true
+   };
+   var plotOptions = {
+      spline: {
+         marker: {
+            radius: 4,
+            lineColor: '#666666',
+            lineWidth: 1
+         }
+      }
+   };
+   var xAxis = {
+      title: {
+         text: 'Throughput'
+      },
+      categories: ['100','1000']
+   };
+   var series= [ {
+         name: 'CockroachDB',
+         marker: {
+            symbol: 'circle'
+         },
+         data: [768.5804319422027,768.5804319422027],
+         
+      },
+   ];
+   var json = {};
+   json.chart = chart;
+   json.title = title;
+   json.subtitle = subtitle;
+   json.tooltip = tooltip;
+   json.xAxis = xAxis;
+   json.yAxis = yAxis;  
+   json.series = series;
+   json.plotOptions = plotOptions;
+   $('#WorkloadA-OVERALL-Throughput').highcharts(json);
+  
+});
+</script>
+
+<p>
+<hr>
+Reference results: CockroachDB-WorkloadA-100.result CockroachDB-WorkloadA-1000.result
+<br>
+Last updated at 2020-03-31_15:26:14.
+</p>
+</body>
+</html>
+
