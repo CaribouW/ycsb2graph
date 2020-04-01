@@ -9,7 +9,7 @@ import pyecharts
 from pyecharts import Page
 
 
-def constructor(root_dir: 'str'):
+def constructor(root_dir):
     """
     Read from local file system and fetch all filenames which end with .result
     :param root_dir: Root directory name
@@ -34,7 +34,7 @@ def constructor(root_dir: 'str'):
     return ans
 
 
-def construct_graph(x_kv: 'dict', y_kv: 'dict', x_label_name: 'str'):
+def construct_graph(x_kv, y_kv, x_label_name):
     """
     construct data (x axis is the thread count)
     legend is the DB type , the x label is thread count , and the y label is ops
@@ -69,9 +69,7 @@ def construct_graph(x_kv: 'dict', y_kv: 'dict', x_label_name: 'str'):
     for label, v in lines.items():
         X, y = [str(item[0]) for item in v], [item[1] for item in v]
         line.add(label, X, y)
-
     return line
-    # line.render('result_{}.html'.format(x_label_name))
 
 
 if __name__ == '__main__':
@@ -92,8 +90,6 @@ if __name__ == '__main__':
             thread_count=threadCnt
         ))
     page = Page()
-    l1 = construct_graph(x_kv, y_kv, 'opr_count')
-    l2 = construct_graph(x_kv, y_kv, 'thread_count')
-    page.add(l1)
-    page.add(l2)
+    for label in ['opr_count', 'thread_count']:
+        page.add(construct_graph(x_kv, y_kv, label))
     page.render("index.html")
