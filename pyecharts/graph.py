@@ -15,7 +15,8 @@ class YCSB_analyser:
         self.workload_key = 'workload'
         self.db_type_key = 'DB'
         self.root_path = root_path
-        self.x_labels = ['opr_count', 'thread_count']
+        self.x_labels = ['operation_count', 'thread_count']
+        self.db_type_cnt = 0
 
     def paint(self):
         # Fetch data of y-axis from all of files (end with .result)
@@ -23,12 +24,15 @@ class YCSB_analyser:
         # Fetch data of x-axis from filename
         raw_x_kv = self.analyse_x_axis(y_kv)
         # split the x_kvs into multiple barrels
-        for patch in self.kv_patch(raw_x_kv):
-            pass
+        patches = self.kv_patch(raw_x_kv)
         # paint each graph according to current x-label types
         page = Page()
-        for label in ['thread_count']:
-            page.add(self.construct_graph(raw_x_kv, y_kv, label))
+
+        for confine_label, v in patches.items():
+            for confine_value, x_data in v.items():
+                page.add(
+                    self.construct_graph(x_data, y_kv, [item for item in self.x_labels if item != confine_label][0],
+                                         (confine_label, confine_value)))
         page.render("index.html")
 
     def analyse_y_axis(self):
@@ -56,6 +60,7 @@ class YCSB_analyser:
 
     def analyse_x_axis(self, y_kv):
         x_kv = {}
+        db_set = set()
         for file_name in y_kv.keys():
             split_li = file_name.split('/')[-1] \
                 .split('.')[-2] \
@@ -66,25 +71,43 @@ class YCSB_analyser:
             DB, oprCount, threadCnt, workload = split_li[0], int(split_li[1]), int(split_li[2]), split_li[3]
             x_kv.setdefault(file_name, dict(
                 DB=DB,
-                opr_count=oprCount,
+                operation_count=oprCount,
                 thread_count=threadCnt,
                 workload=workload
             ))
+            db_set.add(DB)
+        self.db_type_cnt = len(db_set)
         return x_kv
 
     def kv_patch(self, raw_x_kv):
+        """
+        Split the raw kv data into different patches
+        :param raw_x_kv:
+        :return:
+        """
         # {'thread_count': 4, 'opr_count': 500000, 'workload': 'workloada', 'DB': 'AnnaMaster'}
         barrels = {}
         for cur_key in self.x_labels:
             value_set = sorted(list(set([v[cur_key] for v in raw_x_kv.values()])))
             barrels.update({cur_key: value_set})
 
+        kvs = {}
         for i, cur_key in enumerate(self.x_labels):
-            pass
-        print(barrels)
-        return raw_x_kv
+            val_map = {}
+            for label_val in barrels[cur_key]:
+                pre = val_map.get(label_val) if label_val in val_map else {}
+                for k, v in [[k, v] for k, v in raw_x_kv.items() if v[cur_key] == label_val]:
+                    pre.update({k: v})
+                val_map.update({label_val: pre})
+            # clean up single node
+            true_map = {}
+            for k, v in val_map.items():
+                if len(val_map[k]) > self.db_type_cnt:
+                    true_map.update({k: v})
+            kvs.update({cur_key: true_map})
+        return kvs
 
-    def construct_graph(self, x_kv, y_kv, x_label_name):
+    def construct_graph(self, x_kv, y_kv, x_label_name, confine):
         """
         construct graph (x axis is the thread count)
         :param x_kv:
@@ -113,12 +136,22 @@ class YCSB_analyser:
 
         # Now every line could construct the single line in the graph
         # Every line denotes the target DB type
-        line = pyecharts.Line(x_value[self.workload_key], title_pos='center')
+        title = ' '.join(
+            "[{}]-[Throughput] Graph\n\n({} : {})".format(x_label_name.title(), confine[0].title(), confine[1])
+                .split('_'))
+        sub_title = "Workload {}".format(x_value[self.workload_key].title())
+
+        line = pyecharts.Line(title,
+                              sub_title,
+                              height=300,
+                              title_text_size=14,
+                              subtitle_text_size=10,
+                              title_pos='center')
         # https://pyecharts.readthedocs.io/en/latest/zh-cn/%E5%9B%BE%E5%BD%A2%E7%AF%87/
         for label, v in lines.items():
             X, y = [str(item[0]) for item in v], [item[1] for item in v]
             line.add(label, X, y,
-                     xaxis_name=x_label_name,
+                     xaxis_name=' '.join(x_label_name.title().split('_')),
                      yaxis_name=self.ops_key,
                      xaxis_name_pos='middle',
                      yaxis_name_pos='end',

@@ -966,23 +966,23 @@ radiusToData:a.prototype.coordToData},o.inherits(n,a),t.exports=n},function(t,e,
 </head>
 
 <body>
-<div id="97fde2a17fde4b1da95ffffc4976e513" style="width:800px;height:400px;"></div>
+<div id="3d0a7580aa7643138f2f7f734bc7a84a" style="width:800px;height:300px;"></div>
 <script type="text/javascript">
-    var myChart_97fde2a17fde4b1da95ffffc4976e513 = echarts.init(document.getElementById('97fde2a17fde4b1da95ffffc4976e513'));
-    var option_97fde2a17fde4b1da95ffffc4976e513 = {
+    var myChart_3d0a7580aa7643138f2f7f734bc7a84a = echarts.init(document.getElementById('3d0a7580aa7643138f2f7f734bc7a84a'));
+    var option_3d0a7580aa7643138f2f7f734bc7a84a = {
     "title": [
         {
-            "text": "workloada",
-            "subtext": "",
+            "text": "[Thread Count]-[Throughput] Graph\n\n(Operation Count : 10000)",
+            "subtext": "Workload Workloada",
             "left": "center",
             "top": "auto",
             "textStyle": {
                 "color": "#000",
-                "fontSize": 18
+                "fontSize": 14
             },
             "subtextStyle": {
                 "color": "#aaa",
-                "fontSize": 12
+                "fontSize": 10
             }
         }
     ],
@@ -997,22 +997,22 @@ radiusToData:a.prototype.coordToData},o.inherits(n,a),t.exports=n},function(t,e,
             }
         }
     },
-    "_index_flag": 115785,
+    "_index_flag": 180724,
     "tooltip": {},
     "series": [
         {
             "type": "line",
-            "name": "Redis",
+            "name": "redis",
             "symbol": "emptyCircle",
             "smooth": false,
             "step": false,
             "stack": "",
             "showSymbol": true,
             "data": [
-                12976.564324829358,
-                20113.439800474676,
-                23768.777334093935,
-                27401.764673644982
+                345.37542308489327,
+                345.6738912509938,
+                665.4245408570669,
+                615.2331733727083
             ],
             "label": {
                 "normal": {
@@ -1043,21 +1043,21 @@ radiusToData:a.prototype.coordToData},o.inherits(n,a),t.exports=n},function(t,e,
             "markLine": {
                 "data": []
             },
-            "indexflag": 115785
+            "indexflag": 180724
         },
         {
             "type": "line",
-            "name": "AnnaMaster",
+            "name": "anna",
             "symbol": "emptyCircle",
             "smooth": false,
             "step": false,
             "stack": "",
             "showSymbol": true,
             "data": [
-                2353.7719195010004,
-                4567.377959660917,
-                5850.7588434219915,
-                9788.566953797965
+                924.2144177449168,
+                1295.1690195570523,
+                1631.587534671235,
+                1162.2501162250117
             ],
             "label": {
                 "normal": {
@@ -1088,14 +1088,14 @@ radiusToData:a.prototype.coordToData},o.inherits(n,a),t.exports=n},function(t,e,
             "markLine": {
                 "data": []
             },
-            "indexflag": 115785
+            "indexflag": 180724
         }
     ],
     "legend": [
         {
             "data": [
-                "Redis",
-                "AnnaMaster"
+                "redis",
+                "anna"
             ],
             "selectedMode": "multiple",
             "show": true,
@@ -1107,7 +1107,7 @@ radiusToData:a.prototype.coordToData},o.inherits(n,a),t.exports=n},function(t,e,
     "backgroundColor": "#fff",
     "xAxis": [
         {
-            "name": "thread_count",
+            "name": "Thread Count",
             "nameLocation": "middle",
             "nameGap": 25,
             "nameTextStyle": {
@@ -1120,10 +1120,10 @@ radiusToData:a.prototype.coordToData},o.inherits(n,a),t.exports=n},function(t,e,
             "min": null,
             "max": null,
             "data": [
+                "1",
+                "2",
                 "4",
-                "8",
-                "16",
-                "32"
+                "8"
             ],
             "type": "category"
         }
@@ -1173,7 +1173,216 @@ radiusToData:a.prototype.coordToData},o.inherits(n,a),t.exports=n},function(t,e,
         "#f6f5ec"
     ]
 };
-    myChart_97fde2a17fde4b1da95ffffc4976e513.setOption(option_97fde2a17fde4b1da95ffffc4976e513);
+    myChart_3d0a7580aa7643138f2f7f734bc7a84a.setOption(option_3d0a7580aa7643138f2f7f734bc7a84a);
+</script>
+<div id="49ccec2ab95b42dc83462668737a1b7b" style="width:800px;height:300px;"></div>
+<script type="text/javascript">
+    var myChart_49ccec2ab95b42dc83462668737a1b7b = echarts.init(document.getElementById('49ccec2ab95b42dc83462668737a1b7b'));
+    var option_49ccec2ab95b42dc83462668737a1b7b = {
+    "title": [
+        {
+            "text": "[Operation Count]-[Throughput] Graph\n\n(Thread Count : 2)",
+            "subtext": "Workload Workloada",
+            "left": "center",
+            "top": "auto",
+            "textStyle": {
+                "color": "#000",
+                "fontSize": 14
+            },
+            "subtextStyle": {
+                "color": "#aaa",
+                "fontSize": 10
+            }
+        }
+    ],
+    "toolbox": {
+        "show": true,
+        "orient": "vertical",
+        "left": "right",
+        "top": "center",
+        "feature": {
+            "saveAsImage": {
+                "show": true
+            }
+        }
+    },
+    "_index_flag": 1765491,
+    "tooltip": {},
+    "series": [
+        {
+            "type": "line",
+            "name": "redis",
+            "symbol": "emptyCircle",
+            "smooth": false,
+            "step": false,
+            "stack": "",
+            "showSymbol": true,
+            "data": [
+                345.6738912509938,
+                541.0669840926307,
+                502.48731219536705,
+                387.26667183022226
+            ],
+            "label": {
+                "normal": {
+                    "show": false,
+                    "position": "top",
+                    "textStyle": {
+                        "color": "#000",
+                        "fontSize": 12
+                    },
+                    "formatter": null
+                },
+                "emphasis": {
+                    "show": true
+                }
+            },
+            "lineStyle": {
+                "normal": {
+                    "width": 1,
+                    "opacity": 1,
+                    "curveness": 0,
+                    "type": "solid"
+                }
+            },
+            "areaStyle": {},
+            "markPoint": {
+                "data": []
+            },
+            "markLine": {
+                "data": []
+            },
+            "indexflag": 1765491
+        },
+        {
+            "type": "line",
+            "name": "anna",
+            "symbol": "emptyCircle",
+            "smooth": false,
+            "step": false,
+            "stack": "",
+            "showSymbol": true,
+            "data": [
+                1295.1690195570523,
+                1579.778830963665,
+                null,
+                null
+            ],
+            "label": {
+                "normal": {
+                    "show": false,
+                    "position": "top",
+                    "textStyle": {
+                        "color": "#000",
+                        "fontSize": 12
+                    },
+                    "formatter": null
+                },
+                "emphasis": {
+                    "show": true
+                }
+            },
+            "lineStyle": {
+                "normal": {
+                    "width": 1,
+                    "opacity": 1,
+                    "curveness": 0,
+                    "type": "solid"
+                }
+            },
+            "areaStyle": {},
+            "markPoint": {
+                "data": []
+            },
+            "markLine": {
+                "data": []
+            },
+            "indexflag": 1765491
+        }
+    ],
+    "legend": [
+        {
+            "data": [
+                "redis",
+                "anna"
+            ],
+            "selectedMode": "multiple",
+            "show": true,
+            "left": "right",
+            "top": "top",
+            "orient": "vertical"
+        }
+    ],
+    "backgroundColor": "#fff",
+    "xAxis": [
+        {
+            "name": "Operation Count",
+            "nameLocation": "middle",
+            "nameGap": 25,
+            "nameTextStyle": {
+                "fontSize": 14
+            },
+            "axisLabel": {
+                "interval": "auto",
+                "rotate": 0
+            },
+            "min": null,
+            "max": null,
+            "data": [
+                "10000",
+                "20000",
+                "40000",
+                "80000"
+            ],
+            "type": "category"
+        }
+    ],
+    "yAxis": [
+        {
+            "name": "Throughput(ops/sec)",
+            "nameLocation": "end",
+            "nameGap": 25,
+            "nameTextStyle": {
+                "fontSize": 14
+            },
+            "axisLabel": {
+                "formatter": "{value} ",
+                "rotate": 0
+            },
+            "min": null,
+            "max": null,
+            "type": "value"
+        }
+    ],
+    "color": [
+        "#c23531",
+        "#2f4554",
+        "#61a0a8",
+        "#d48265",
+        "#749f83",
+        "#ca8622",
+        "#bda29a",
+        "#6e7074",
+        "#546570",
+        "#c4ccd3",
+        "#f05b72",
+        "#ef5b9c",
+        "#f47920",
+        "#905a3d",
+        "#fab27b",
+        "#2a5caa",
+        "#444693",
+        "#726930",
+        "#b2d235",
+        "#6d8346",
+        "#ac6767",
+        "#1d953f",
+        "#6950a1",
+        "#918597",
+        "#f6f5ec"
+    ]
+};
+    myChart_49ccec2ab95b42dc83462668737a1b7b.setOption(option_49ccec2ab95b42dc83462668737a1b7b);
 </script>
 
 </body>
