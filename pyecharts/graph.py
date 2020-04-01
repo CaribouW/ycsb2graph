@@ -12,12 +12,28 @@ from pyecharts import Page
 class YCSB_analyser:
     def __init__(self, root_path):
         self.ops_key = 'Throughput(ops/sec)'
+        self.workload_key = 'workload'
+        self.db_type_key = 'DB'
         self.root_path = root_path
+        self.x_labels = ['opr_count', 'thread_count']
+
+    def paint(self):
+        # Fetch data of y-axis from all of files (end with .result)
+        y_kv = self.analyse_y_axis()
+        # Fetch data of x-axis from filename
+        raw_x_kv = self.analyse_x_axis(y_kv)
+        # split the x_kvs into multiple barrels
+        for patch in self.kv_patch(raw_x_kv):
+            pass
+        # paint each graph according to current x-label types
+        page = Page()
+        for label in ['thread_count']:
+            page.add(self.construct_graph(raw_x_kv, y_kv, label))
+        page.render("index.html")
 
     def analyse_y_axis(self):
         """
         Read from local file system and fetch all filenames which end with .result
-        :param root_dir: Root directory name
         :return: y-axis label and data. Now they are 'ops' and 'runtime'
         """
         target_file_list = []
@@ -56,22 +72,35 @@ class YCSB_analyser:
             ))
         return x_kv
 
+    def kv_patch(self, raw_x_kv):
+        # {'thread_count': 4, 'opr_count': 500000, 'workload': 'workloada', 'DB': 'AnnaMaster'}
+        barrels = {}
+        for cur_key in self.x_labels:
+            value_set = sorted(list(set([v[cur_key] for v in raw_x_kv.values()])))
+            barrels.update({cur_key: value_set})
+
+        for i, cur_key in enumerate(self.x_labels):
+            pass
+        print(barrels)
+        return raw_x_kv
+
     def construct_graph(self, x_kv, y_kv, x_label_name):
         """
         construct graph (x axis is the thread count)
         :param x_kv:
         :param y_kv:
+        :param x_label_name:
         :return:
         """
         lines = {}
         for x_value in x_kv.values():
-            db_type = x_value.get('DB')
+            db_type = x_value.get(self.db_type_key)
             if lines.get(db_type) is None: lines.setdefault(db_type, [])
 
         x_tmp_list = []
         for k, x_value in x_kv.items():
             y_value = y_kv.get(k)
-            db_type = x_value.get('DB')
+            db_type = x_value.get(self.db_type_key)
             x, y = x_value.get(x_label_name), y_value.get(self.ops_key)
             x_tmp_list.append(x)
             li = lines.get(db_type)
@@ -84,21 +113,19 @@ class YCSB_analyser:
 
         # Now every line could construct the single line in the graph
         # Every line denotes the target DB type
-        line = pyecharts.Line(x_label_name, x_value['workload'])
+        line = pyecharts.Line(x_value[self.workload_key], title_pos='center')
+        # https://pyecharts.readthedocs.io/en/latest/zh-cn/%E5%9B%BE%E5%BD%A2%E7%AF%87/
         for label, v in lines.items():
             X, y = [str(item[0]) for item in v], [item[1] for item in v]
-            line.add(label, X, y)
+            line.add(label, X, y,
+                     xaxis_name=x_label_name,
+                     yaxis_name=self.ops_key,
+                     xaxis_name_pos='middle',
+                     yaxis_name_pos='end',
+                     legend_pos='right',
+                     legend_orient='vertical'
+                     )
         return line
-
-    def paint(self):
-        # Fetch data of y-axis from all of files (end with .result)
-        y_kv = self.analyse_y_axis()
-        # Fetch data of x-axis from filename
-        x_kv = self.analyse_x_axis(y_kv)
-        page = Page()
-        for label in ['thread_count']:
-            page.add(self.construct_graph(x_kv, y_kv, label))
-        page.render("index.html")
 
 
 if __name__ == '__main__':
