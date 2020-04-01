@@ -9,7 +9,7 @@ import pyecharts
 from pyecharts import Page
 
 
-def constructor(root_dir):
+def construct_yKV(root_dir):
     """
     Read from local file system and fetch all filenames which end with .result
     :param root_dir: Root directory name
@@ -52,10 +52,7 @@ def construct_graph(x_kv, y_kv, x_label_name):
         y_value = y_kv.get(k)
         db_type = x_value.get('DB')
         x, y = x_value.get(x_label_name), y_value.get('Throughput(ops/sec)')
-        if x in x_tmp_list:
-            continue
-        else:
-            x_tmp_list.append(x)
+        x_tmp_list.append(x)
         li = lines.get(db_type)
         li += [(x, y)]
         lines.update({db_type: li})
@@ -74,7 +71,7 @@ def construct_graph(x_kv, y_kv, x_label_name):
 
 if __name__ == '__main__':
     path = sys.argv[1]
-    y_kv = constructor(path)
+    y_kv = construct_yKV(path)
     x_kv = {}
     for file_name in y_kv.keys():
         split_li = file_name.split('/')[-1] \
@@ -91,6 +88,6 @@ if __name__ == '__main__':
             workload=workload
         ))
     page = Page()
-    for label in ['opr_count', 'thread_count']:
+    for label in ['thread_count']:
         page.add(construct_graph(x_kv, y_kv, label))
     page.render("index.html")
