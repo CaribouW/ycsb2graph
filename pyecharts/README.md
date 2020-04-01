@@ -3,6 +3,7 @@
 ### Usage
 
 ```
+pip install -r requirements.txt
 python graph.py <root-path>
 ```
 
