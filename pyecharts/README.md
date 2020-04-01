@@ -11,5 +11,5 @@ Then the painter will walk through all of the files end with `.result` under the
 
 ### Filename Constraint
 
-The file name format should be `{DB}-{oprCount}-{threadCount}.result`
+The file name format should be `{DB}-{oprCount}-{threadCount}-{workload}.result`
 

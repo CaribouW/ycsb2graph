@@ -1,6 +1,6 @@
 """
 The file path only has the operation count , the DB type and the thread cnt
-The format is {DB}-{oprCount}-{threadCnt}.result
+The format is {DB}-{oprCount}-{threadCnt}-{workloadName}.result
 """
 import os
 import sys
@@ -65,7 +65,7 @@ def construct_graph(x_kv, y_kv, x_label_name):
         lines.update({k: sorted(lines.get(k), key=lambda item: item[0])})
 
     # Now every line could construct the single line
-    line = pyecharts.Line("{} graph".format(x_label_name), '2020-03-30')
+    line = pyecharts.Line("{}\ntype :{}".format(x_value['workload'], x_label_name), '2020-03-30')
     for label, v in lines.items():
         X, y = [str(item[0]) for item in v], [item[1] for item in v]
         line.add(label, X, y)
@@ -81,13 +81,14 @@ if __name__ == '__main__':
             .split('.')[-2] \
             .split('-')
         if len(split_li) < 3:
-            print('Error ! The format should be {DB}-{oprCount}-{threadCnt}.result')
+            print('Error ! The format should be {DB}-{oprCount}-{threadCnt}-{workloadName}.result')
             break
-        DB, oprCount, threadCnt = split_li[0], int(split_li[1]), int(split_li[2])
+        DB, oprCount, threadCnt, workload = split_li[0], int(split_li[1]), int(split_li[2]), split_li[3]
         x_kv.setdefault(file_name, dict(
             DB=DB,
             opr_count=oprCount,
-            thread_count=threadCnt
+            thread_count=threadCnt,
+            workload=workload
         ))
     page = Page()
     for label in ['opr_count', 'thread_count']:
