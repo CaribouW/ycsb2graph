@@ -24,7 +24,7 @@ class YCSB_analyser:
         self.workload_key = 'workload'
         self.db_type_key = 'DB'
         self.root_path = root_path
-        self.x_labels = ['operation_count', 'thread_count']
+        self.x_labels = ['operation_count', 'number_of_threads']
         self.db_type_cnt = 0
 
     def paint(self):
@@ -81,7 +81,7 @@ class YCSB_analyser:
             x_kv.setdefault(file_name, dict(
                 DB=DB,
                 operation_count=oprCount,
-                thread_count=threadCnt,
+                number_of_threads=threadCnt,
                 workload=workload
             ))
             db_set.add(DB)
@@ -159,7 +159,7 @@ class YCSB_analyser:
         for label, v in lines.items():
             X, y = [str(item[0]) for item in v], [item[1] for item in v]
             line.add(label, X, y,
-                     xaxis_name=' '.join(x_label_name.title().split('_')),
+                     xaxis_name=' '.join(x_label_name.split('_')),
                      yaxis_name=self.ops_key,
                      xaxis_name_pos='middle',
                      yaxis_name_pos='end',
