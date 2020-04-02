@@ -1,0 +1,7 @@
+,title,subtitle
+,workloada,Update heavy(Read/Update ratio: 50/50)
+,workloadb,Read mostly(Read/Update ratio: 95/5)
+,workloadc,Read only(Read/Update ratio: 100/0)
+,workloadd,Read latest(Read/Update/Insert ratio: 95/0/5)
+,workloade,Short ranges scan(Scan/Insert ratio: 95/5)
+,workloadf,Read-Modify-Write(Read/Read-Modify-Write ratio: 50/50)

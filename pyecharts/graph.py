@@ -5,8 +5,17 @@ The format is {DB}-{oprCount}-{threadCnt}-{workloadName}.result
 import os
 import sys
 
+import pandas as pd
 import pyecharts
 from pyecharts import Page
+
+
+def read_workload():
+    ans = {}
+    df = pd.read_csv('workloadmapping.csv')
+    for i, row in df.iterrows():
+        ans.update({row['title']: row['subtitle']})
+    return ans
 
 
 class YCSB_analyser:
@@ -136,10 +145,9 @@ class YCSB_analyser:
 
         # Now every line could construct the single line in the graph
         # Every line denotes the target DB type
-        title = ' '.join(
-            "[{}]-[Throughput] Graph\n\n({} : {})".format(x_label_name.title(), confine[0].title(), confine[1])
-                .split('_'))
-        sub_title = "Workload {}".format(x_value[self.workload_key].title())
+        workload_map = read_workload()
+        title = x_value[self.workload_key].title()
+        sub_title = workload_map[x_value[self.workload_key]] if x_value[self.workload_key] in workload_map else ''
 
         line = pyecharts.Line(title,
                               sub_title,
