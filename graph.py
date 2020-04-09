@@ -41,7 +41,13 @@ class YCSB_analyser:
             for confine_value, x_data in v.items():
                 page.add(
                     self.construct_graph(x_data, y_kv, [item for item in self.x_labels if item != confine_label][0]))
-        page.render("{}/index.html".format(self.root_path))
+        result_html_path = "{}/index.html".format(self.root_path)
+        try:
+            f =open(result_html_path,'r')
+            f.close()
+        except IOError:
+            f = open(result_html_path,'w')
+        page.render(result_html_path)
 
     def analyse_y_axis(self):
         """
