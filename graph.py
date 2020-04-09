@@ -40,9 +40,8 @@ class YCSB_analyser:
         for confine_label, v in patches.items():
             for confine_value, x_data in v.items():
                 page.add(
-                    self.construct_graph(x_data, y_kv, [item for item in self.x_labels if item != confine_label][0],
-                                         (confine_label, confine_value)))
-        page.render("index.html")
+                    self.construct_graph(x_data, y_kv, [item for item in self.x_labels if item != confine_label][0]))
+        page.render("{}/index.html".format(self.root_path))
 
     def analyse_y_axis(self):
         """
@@ -116,7 +115,7 @@ class YCSB_analyser:
             kvs.update({cur_key: true_map})
         return kvs
 
-    def construct_graph(self, x_kv, y_kv, x_label_name, confine):
+    def construct_graph(self, x_kv, y_kv, x_label_name):
         """
         construct graph (x axis is the thread count)
         :param x_kv:
