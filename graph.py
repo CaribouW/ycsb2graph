@@ -42,6 +42,8 @@ class YCSB_analyser:
                 page.add(
                     self.construct_graph(x_data, y_kv, [item for item in self.x_labels if item != confine_label][0]))
         result_html_path = "{}/index.html".format(self.root_path)
+        os.system('ls -l')
+
         if not os.path.exists(result_html_path):
             os.system('touch {}'.format(result_html_path))
         page.render(result_html_path)
