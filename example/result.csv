@@ -1,0 +1,15 @@
+,RunTime(ms),Throughput(ops/sec),DB,operation_count,number_of_threads,workload,filePath
+0,15028.0,665.4245408570669,redis,10000,4,workloada,example/redis-10000-4-workloada.result
+0,6129.0,1631.587534671235,anna,10000,4,workloada,example/anna-10000-4-workloada.result
+0,10820.0,924.2144177449168,anna,10000,1,workloada,example/anna-10000-1-workloada.result
+0,28954.0,345.37542308489327,redis,10000,1,workloada,example/redis-10000-1-workloada.result
+0,28929.0,345.6738912509938,redis,10000,2,workloada,example/redis-10000-2-workloada.result
+0,7721.0,1295.1690195570523,anna,10000,2,workloada,example/anna-10000-2-workloada.result
+0,,,anna,80000,2,workloada,example/anna-80000-2-workloada.result
+0,6330.0,1579.778830963665,anna,20000,2,workloada,example/anna-20000-2-workloada.result
+0,25822.0,387.26667183022226,redis,80000,2,workloada,example/redis-80000-2-workloada.result
+0,18482.0,541.0669840926307,redis,20000,2,workloada,example/redis-20000-2-workloada.result
+0,8604.0,1162.2501162250117,anna,10000,8,workloada,example/anna-10000-8-workloada.result
+0,,,anna,40000,2,workloada,example/anna-40000-2-workloada.result
+0,16254.0,615.2331733727083,redis,10000,8,workloada,example/redis-10000-8-workloada.result
+0,19901.0,502.48731219536705,redis,40000,2,workloada,example/redis-40000-2-workloada.result

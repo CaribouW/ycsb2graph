@@ -27,6 +27,17 @@ class YCSB_analyser:
         self.x_labels = ['operation_count', 'number_of_threads']
         self.db_type_cnt = 0
 
+    def store_csv(self, d1, d2):
+        dic_tmp = d1.copy()
+        for k, v in d2.items():
+            tmp_v = dic_tmp.get(k)
+            tmp_v.update(v)
+        df = pd.DataFrame()
+        for k, v in dic_tmp.items():
+            v.update({"filePath": k})
+            df = df.append([v])
+        df.to_csv(self.root_path + '/result.csv')
+
     def paint(self):
         # Fetch data of y-axis from all of files (end with .result)
         y_kv = self.analyse_y_axis()
@@ -34,6 +45,10 @@ class YCSB_analyser:
         raw_x_kv = self.analyse_x_axis(y_kv)
         # split the x_kvs into multiple barrels
         patches = self.kv_patch(raw_x_kv)
+
+        # store to csv
+        self.store_csv(y_kv, raw_x_kv)
+
         # paint each graph according to current x-label types
         page = Page()
 
@@ -42,8 +57,6 @@ class YCSB_analyser:
                 page.add(
                     self.construct_graph(x_data, y_kv, [item for item in self.x_labels if item != confine_label][0]))
         result_html_path = "{}/index.html".format(self.root_path)
-        os.system('ls -l')
-
         if not os.path.exists(result_html_path):
             os.system('touch {}'.format(result_html_path))
         page.render(result_html_path)
